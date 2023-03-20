@@ -19,7 +19,7 @@ struct Character: Decodable {
 
 struct Origin: Decodable {
     let name: String
-    let url: URL
+    let url: String
 }
 
 struct Location: Decodable {

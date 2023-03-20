@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let link = "https://rickandmortyapi.com/api/character/1"
+    private let link = "https://rickandmortyapi.com/api/character/2"
 
     override func viewDidLoad() {
         super.viewDidLoad()
