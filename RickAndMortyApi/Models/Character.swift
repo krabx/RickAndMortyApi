@@ -7,26 +7,22 @@
 
 import Foundation
 
-struct Character {
+struct Character: Decodable {
     let name: String
     let status: String
     let species: String
     let origin: Origin
     let location: Location
-    let image: String
-    let episode: Episode
+    let image: URL
+    let episode: [URL]
 }
 
-struct Origin {
+struct Origin: Decodable {
     let name: String
-    let url: String
+    let url: URL
 }
 
-struct Location {
+struct Location: Decodable {
     let name: String
-    let url: String
-}
-
-struct Episode {
-    let numberOfEpisode: String
+    let url: URL
 }
