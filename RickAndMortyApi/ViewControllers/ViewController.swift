@@ -13,20 +13,20 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        jsonDecode()
+        fetchCharacter()
     }
     
-    private func jsonDecode() {
+    private func fetchCharacter() {
         guard let url = URL(string: link) else { return }
-        
+
         URLSession.shared.dataTask(with: url) {data, _, error in
             guard let data else {
                 print(error?.localizedDescription ?? "Unknown error")
                 return
             }
-            
+
             let decoder = JSONDecoder()
-            
+
             do {
                 let character = try decoder.decode(Character.self, from: data)
                 print(character)
