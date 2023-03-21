@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let link = "https://rickandmortyapi.com/api/character/1"
+    private let link = "https://rickandmortyapi.com/api/character/1,2"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class ViewController: UIViewController {
             let decoder = JSONDecoder()
 
             do {
-                let character = try decoder.decode(Character.self, from: data)
+                let character = try decoder.decode([Character].self, from: data)
                 print(character)
             } catch let error {
                 print(error.localizedDescription)
