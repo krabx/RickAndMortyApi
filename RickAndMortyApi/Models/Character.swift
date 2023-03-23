@@ -8,6 +8,7 @@
 import Foundation
 
 struct Character: Decodable {
+    let id: Int
     let name: String
     let status: String
     let species: String
@@ -25,4 +26,13 @@ struct Origin: Decodable {
 struct Location: Decodable {
     let name: String
     let url: String
+}
+
+struct InfoAboutCharacters: Decodable {
+    let info: Info
+}
+
+struct Info: Decodable {
+    let count: Int
+    let pages: Int
 }
