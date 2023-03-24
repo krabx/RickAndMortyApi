@@ -15,7 +15,7 @@ enum Links {
     var url: URL {
         switch self {
         case .character:
-            return URL(string: "https://rickandmortyapi.com/api/character/1")!
+            return URL(string: "https://rickandmortyapi.com/api/character")!
         case .location:
             return URL(string: "https://rickandmortyapi.com/api/location")!
         case .episode:
@@ -59,5 +59,20 @@ final class NetworkManager {
                 completion(.failure(.failDecode))
             }
         }.resume()
+    }
+    
+    func fetchImage(from url: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+        guard let url = URL(string: url) else { return }
+        
+        DispatchQueue.global().async {
+            guard let imageData = try? Data(contentsOf: url) else {
+                completion(.failure(.failData))
+                return
+            }
+            
+            DispatchQueue.main.async {
+                completion(.success(imageData))
+            }
+        }
     }
 }

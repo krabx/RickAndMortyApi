@@ -8,7 +8,7 @@
 import Foundation
 
 struct Character: Decodable {
-    let id: Int
+    //let id: Int
     let name: String
     let status: String
     let species: String
@@ -28,8 +28,9 @@ struct Location: Decodable {
     let url: String
 }
 
-struct InfoAboutCharacters: Decodable {
+struct AboutCharacters: Decodable {
     let info: Info
+    let results: [Character]
 }
 
 struct Info: Decodable {

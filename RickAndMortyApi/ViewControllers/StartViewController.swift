@@ -11,7 +11,7 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkManager.shared.fetch(Character.self, from: Links.character.url) { result in
+        NetworkManager.shared.fetch([Character].self, from: Links.character.url) { result in
             switch result {
             case .success(let info):
                 print(info)
