@@ -14,14 +14,26 @@ class CharactersViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Characters"
         collectionView.contentInsetAdjustmentBehavior = .never
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let index = collectionView.indexPathsForSelectedItems else { return }
+        guard let aboutCharacterVC = segue.destination as? AboutCharacterViewController else { return }
+        aboutCharacterVC.character = characters[index[0].row]
     }
 
 //     MARK: UICollectionViewDataSource
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return characters.count
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "aboutCharacter", sender: nil)
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -30,6 +42,7 @@ class CharactersViewController: UICollectionViewController {
             for: indexPath
         )
         guard let cell = cell as? CharacterCollectionViewCell else { return UICollectionViewCell() }
+        
         cell.configure(with: characters[indexPath.row])
         
         return cell
@@ -72,5 +85,8 @@ extension CharactersViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 30
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
 }

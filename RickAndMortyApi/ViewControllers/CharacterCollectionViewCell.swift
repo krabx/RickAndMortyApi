@@ -26,9 +26,6 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
                 print(error)
             }
         }
-        
-//        characterImage.frame.size.width = 50
-//
         characterImage.layer.cornerRadius = characterImage.frame.height / 2
     }
     
