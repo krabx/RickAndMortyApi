@@ -14,7 +14,7 @@ class TabBarController: UITabBarController {
         getData()
     }
     
-    func getData() {
+    private func getData() {
         guard let tabBarViewControllers = viewControllers else { return }
         for tabBarViewController in tabBarViewControllers {
             guard let navigationVC = tabBarViewController as? UINavigationController else {
