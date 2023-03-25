@@ -26,8 +26,15 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
                 print(error)
             }
         }
+
         characterImage.layer.cornerRadius = characterImage.frame.height / 2
     }
     
-    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.layer.cornerRadius = 5
+        self.layer.shadowRadius = 10
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: 5, height: 8)
+    }
 }

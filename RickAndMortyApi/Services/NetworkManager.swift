@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Links {
+enum Link {
     case character
     case location
     case episode
@@ -61,7 +61,10 @@ final class NetworkManager {
         }.resume()
     }
     
-    func fetchImage(from url: String, completion: @escaping (Result<Data, NetworkError>) -> Void) {
+    func fetchImage(
+        from url: String,
+        completion: @escaping (Result<Data, NetworkError>) -> Void
+    ) {
         guard let url = URL(string: url) else { return }
         
         DispatchQueue.global().async {

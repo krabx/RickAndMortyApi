@@ -7,24 +7,29 @@
 
 import UIKit
 
-class EpisodesViewController: UITableViewController {
+final class EpisodesViewController: UITableViewController {
     
     private let networkManager = NetworkManager.shared
     private var episodes: [Episode] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Episodes"
     }
-
+    
     // MARK: - Table view data source
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+    
+    override func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return episodes.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "episode", for: indexPath)
         
         var content = cell.defaultContentConfiguration()
@@ -37,14 +42,21 @@ class EpisodesViewController: UITableViewController {
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(
+        _ tableView: UITableView,
+        didSelectRowAt indexPath: IndexPath
+    ) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 extension EpisodesViewController {
     func fetchEpisodes() {
-        networkManager.fetch(AboutEpisodes.self, from: Links.episode.url) { [weak self] result in
+        networkManager.fetch(
+            AboutEpisodes.self,
+            from: Link.episode.url
+        ) {
+            [weak self] result in
             switch result {
             case .success(let episodes):
                 self?.episodes = episodes.results

@@ -219,7 +219,7 @@
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="LNX-Pl-Xxg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Elz-M6-LFW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="92.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="98.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -260,7 +260,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.31372549019607843" green="0.67843137254901964" blue="0.77647058823529413" alpha="1" colorSpace="calibratedRGB"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QTu-Z3-FvM">
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QTu-Z3-FvM">
                             <size key="itemSize" width="300" height="400"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -268,26 +268,26 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="character" id="f8O-48-asg" customClass="CharacterCollectionViewCell" customModule="RickAndMortyApi" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="37.5" width="48" height="400"/>
+                                <rect key="frame" x="0.0" y="34.5" width="300" height="400"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Gda-dr-gV3">
-                                    <rect key="frame" x="0.0" y="0.0" width="48" height="400"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="400"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oKR-g6-Xu3">
-                                            <rect key="frame" x="0.0" y="44" width="48" height="356"/>
+                                            <rect key="frame" x="0.0" y="44" width="300" height="300"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o77-kN-nV0">
-                                            <rect key="frame" x="0.0" y="0.0" width="48" height="24"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="24"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="oKR-g6-Xu3" secondAttribute="bottom" id="15x-z2-maw"/>
                                         <constraint firstItem="oKR-g6-Xu3" firstAttribute="top" secondItem="o77-kN-nV0" secondAttribute="bottom" constant="20" id="77E-HY-7DY"/>
                                         <constraint firstAttribute="trailing" secondItem="oKR-g6-Xu3" secondAttribute="trailing" id="I4R-FY-aOA"/>
+                                        <constraint firstAttribute="bottom" secondItem="oKR-g6-Xu3" secondAttribute="bottom" constant="56" id="JcM-I5-g7R"/>
                                         <constraint firstAttribute="trailing" secondItem="o77-kN-nV0" secondAttribute="trailing" id="POx-NH-WyJ"/>
                                         <constraint firstItem="o77-kN-nV0" firstAttribute="top" secondItem="Gda-dr-gV3" secondAttribute="top" id="Ww1-31-a2Q"/>
                                         <constraint firstItem="o77-kN-nV0" firstAttribute="leading" secondItem="Gda-dr-gV3" secondAttribute="leading" id="oRy-aH-t9b"/>
