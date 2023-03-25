@@ -12,11 +12,6 @@ final class EpisodesViewController: UITableViewController {
     private let networkManager = NetworkManager.shared
     private var episodes: [Episode] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.title = "Episodes"
-    }
-    
     // MARK: - Table view data source
     
     override func tableView(

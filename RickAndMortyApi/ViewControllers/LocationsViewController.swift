@@ -12,11 +12,6 @@ class LocationsViewController: UITableViewController {
     private let networkManager = NetworkManager.shared
     private var locations: [Location] = []
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        navigationItem.title = "Locations"
-    }
-    
     // MARK: - Table view data source
     
     override func tableView(

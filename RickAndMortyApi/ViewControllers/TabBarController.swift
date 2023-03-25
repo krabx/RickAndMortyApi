@@ -15,19 +15,18 @@ class TabBarController: UITabBarController {
     }
     
     func getData() {
-        
-        guard let characterVC = viewControllers?[0] as? CharactersViewController else {
-            return
+        guard let tabBarViewControllers = viewControllers else { return }
+        for tabBarViewController in tabBarViewControllers {
+            guard let navigationVC = tabBarViewController as? UINavigationController else {
+                return
+            }
+            if let charactersVC = navigationVC.topViewController as? CharactersViewController {
+                charactersVC.fetchCharacters()
+            } else if let locationsVC = navigationVC.topViewController as? LocationsViewController {
+                locationsVC.fetchLocations()
+            } else if let episodesVC = navigationVC.topViewController as? EpisodesViewController {
+                episodesVC.fetchEpisodes()
+            }
         }
-        guard let locationVC = viewControllers?[1] as? LocationsViewController else {
-            return
-        }
-        guard let episodesVC = viewControllers?.last as? EpisodesViewController else {
-            return
-        }
-        
-        characterVC.fetchCharacters()
-        locationVC.fetchLocations()
-        episodesVC.fetchEpisodes()
     }
 }
