@@ -252,7 +252,7 @@
             </objects>
             <point key="canvasLocation" x="1893.75" y="-34.859154929577464"/>
         </scene>
-        <!--Item-->
+        <!--Characters-->
         <scene sceneID="LFM-CM-7fc">
             <objects>
                 <collectionViewController id="X86-t2-3Wl" customClass="CharactersViewController" customModule="RickAndMortyApi" customModuleProvider="target" sceneMemberID="viewController">
@@ -305,7 +305,7 @@
                             <outlet property="delegate" destination="X86-t2-3Wl" id="LzG-BJ-LiG"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Item" image="characters" id="yVE-K5-Mxf"/>
+                    <tabBarItem key="tabBarItem" title="Characters" image="characters" id="yVE-K5-Mxf"/>
                     <navigationItem key="navigationItem" id="JUV-Bl-k2p"/>
                     <connections>
                         <segue destination="E6h-w2-aex" kind="presentation" identifier="aboutCharacter" id="nJx-h8-37Z"/>
