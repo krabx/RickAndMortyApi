@@ -10,12 +10,12 @@ import UIKit
 class CharactersViewController: UICollectionViewController {
     
     private let networkManager = NetworkManager.shared
-
     private var characters: [Character] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCharacter()
+        title = "Characters"
+        collectionView.contentInsetAdjustmentBehavior = .never
     }
 
 //     MARK: UICollectionViewDataSource
@@ -37,23 +37,40 @@ class CharactersViewController: UICollectionViewController {
 }
 
 extension CharactersViewController {
-    private func fetchCharacter() {
-        //print(Links.character.url + "/\(i)")
+    func fetchCharacters() {
         networkManager.fetch(AboutCharacters.self, from: Links.character.url) { [weak self] result in
             switch result {
             case .success(let persons):
                 self?.characters = persons.results
-                self?.collectionView.reloadData()
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                }
             case .failure(let error):
                 print(error)
             }
         }
     }
+}
+
+extension CharactersViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize
+    {
+        CGSize(width: UIScreen.main.bounds.width - 48, height: 400)
+    }
     
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//
-//        CGSize(width: UIScreen.main.bounds.width - 48, height: 800)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 40, left: 20, bottom: 20, right: 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 30
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 30
+    }
 }

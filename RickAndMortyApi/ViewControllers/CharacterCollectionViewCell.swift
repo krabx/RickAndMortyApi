@@ -12,13 +12,11 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
     @IBOutlet var characterImage: UIImageView!
     
     @IBOutlet var nameLabel: UILabel!
-    @IBOutlet var statusLabel: UILabel!
     
     private let networkManager = NetworkManager.shared
     
     func configure(with character: Character) {
         nameLabel.text = character.name
-        statusLabel.text = character.status
         
         networkManager.fetchImage(from: character.image) { [weak self] result in
             switch result {
@@ -28,6 +26,10 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
                 print(error)
             }
         }
+        
+//        characterImage.frame.size.width = 50
+//
+        characterImage.layer.cornerRadius = characterImage.frame.height / 2
     }
     
     

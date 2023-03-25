@@ -13,7 +13,7 @@ struct Character: Decodable {
     let status: String
     let species: String
     let origin: Origin
-    let location: Location
+    let location: CharacterLocation
     let image: String
     let episode: [String]
 }
@@ -23,7 +23,7 @@ struct Origin: Decodable {
     let url: String
 }
 
-struct Location: Decodable {
+struct CharacterLocation: Decodable {
     let name: String
     let url: String
 }
@@ -32,6 +32,29 @@ struct AboutCharacters: Decodable {
     let info: Info
     let results: [Character]
 }
+
+struct AboutLocations: Decodable {
+    let info: Info
+    let results: [Location]
+}
+
+struct Location: Decodable {
+    let name: String
+    let type: String
+    let url: String
+}
+
+struct AboutEpisodes: Decodable {
+    let info: Info
+    let results: [Episode]
+}
+
+struct Episode: Decodable {
+    let name: String
+    let episode: String
+}
+
+
 
 struct Info: Decodable {
     let count: Int
