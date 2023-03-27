@@ -47,7 +47,6 @@ class CharactersViewController: UICollectionViewController {
         guard let cell = cell as? CharacterCollectionViewCell else {
             return UICollectionViewCell()
         }
-        
         cell.configure(with: characters[indexPath.row])
         
         return cell
@@ -81,13 +80,16 @@ extension CharactersViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize
     {
-        CGSize(width: UIScreen.main.bounds.width, height: 300)
+        CGSize(width: view.window?.windowScene?.screen.bounds.width ?? 400 - 48, height: 400)
     }
     
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int
-    ) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
+//    func collectionView(
+//        _ collectionView: UICollectionView,
+//        layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int
+//    ) -> UIEdgeInsets {
+//        return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
+//    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
     }
 }
