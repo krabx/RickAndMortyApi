@@ -28,7 +28,14 @@ struct CharacterLocation: Decodable {
 }
 
 struct AboutCharacters: Decodable {
+    let info: Info
     let results: [Character]
+}
+
+struct Info: Decodable {
+    let pages: Int
+    let next: String?
+    let prev: String?
 }
 
 struct AboutLocations: Decodable {

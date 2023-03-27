@@ -11,6 +11,7 @@ class CharactersViewController: UICollectionViewController {
     
     private let networkManager = NetworkManager.shared
     private var characters: [Character] = []
+    private var nextPage: String?
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let index = collectionView.indexPathsForSelectedItems else { return }
@@ -63,15 +64,41 @@ extension CharactersViewController {
             switch result {
             case .success(let persons):
                 self?.characters = persons.results
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                }
+                self?.nextPage = persons.info.next
+                self?.collectionView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchNextCharacters(from url: String?) {
+        networkManager.fetch(AboutCharacters.self, from: url) { [weak self] result in
+            switch result {
+            case .success(let persons):
+                self?.characters.append(contentsOf:persons.results)
+                self?.nextPage = persons.info.next
+                self?.collectionView.reloadData()
             case .failure(let error):
                 print(error)
             }
         }
     }
 }
+
+//private func getNextPage(from url: String?) {
+//    NetworkManager.shared.fetch(RickAndMorty.self, from: url) { [weak self] result in
+//        guard let self = self  else { return }
+//        switch result {
+//        case .success(let rickAndMorty):
+//            self.rickAndMorty?.results.append(contentsOf: rickAndMorty.results)
+//            self.nextPage = rickAndMorty.info.next
+//            self.tableView.reloadData()
+//        case .failure(let error):
+//            print(error)
+//        }
+//    }
+//}
 
 extension CharactersViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
@@ -83,13 +110,9 @@ extension CharactersViewController: UICollectionViewDelegateFlowLayout {
         CGSize(width: view.window?.windowScene?.screen.bounds.width ?? 400 - 48, height: 400)
     }
     
-//    func collectionView(
-//        _ collectionView: UICollectionView,
-//        layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int
-//    ) -> UIEdgeInsets {
-//        return UIEdgeInsets(top: 40, left: 0, bottom: 20, right: 0)
-//    }
-    
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if characters.count - indexPath.row <= 3 {
+            fetchNextCharacters(from: nextPage)
+        }
     }
 }

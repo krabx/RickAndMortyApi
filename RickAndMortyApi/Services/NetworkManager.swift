@@ -12,14 +12,14 @@ enum Link {
     case location
     case episode
     
-    var url: URL {
+    var url: String {
         switch self {
         case .character:
-            return URL(string: "https://rickandmortyapi.com/api/character")!
+            return "https://rickandmortyapi.com/api/character"
         case .location:
-            return URL(string: "https://rickandmortyapi.com/api/location")!
+            return "https://rickandmortyapi.com/api/character"
         case .episode:
-            return URL(string:"https://rickandmortyapi.com/api/episode")!
+            return "https://rickandmortyapi.com/api/character"
         }
     }
 }
@@ -37,10 +37,15 @@ final class NetworkManager {
     
     func fetch<T: Decodable>(
         _ type: T.Type,
-        from url: URL,
+        from url: String?,
         completion: @escaping (Result<T, NetworkError>) -> Void
     )
     {
+        guard let correctURL = url, let url = URL(string: correctURL) else {
+            completion(.failure(.failURL))
+            return
+        }
+        
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data else {
                 completion(.failure(.failData))
