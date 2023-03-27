@@ -24,10 +24,6 @@ final class AboutCharacterViewController: UIViewController {
         setCharactersData()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        characterImage.layer.cornerRadius = characterImage.frame.size.height / 2
-    }
-    
     private func setCharactersData() {
         nameLabel.text = character.name
         statusLabel.text = character.status
@@ -42,6 +38,9 @@ extension AboutCharacterViewController {
             switch result {
             case .success(let image):
                 self?.characterImage.image = UIImage(data: image)
+                DispatchQueue.main.async {
+                    self?.characterImage.layer.cornerRadius = (self?.characterImage.frame.height ?? 300) / 2
+                }
             case .failure(let error):
                 print(error)
             }
