@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E02595F29D1D5B300139C96 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 6E02595E29D1D5B300139C96 /* Alamofire */; };
 		6E925C4529CF339200E7C72A /* LocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E925C4429CF339200E7C72A /* LocationsViewController.swift */; };
 		6E925C4729CF33A300E7C72A /* EpisodesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E925C4629CF33A300E7C72A /* EpisodesViewController.swift */; };
 		6E925C4929CF376700E7C72A /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E925C4829CF376700E7C72A /* TabBarController.swift */; };
@@ -45,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E02595F29D1D5B300139C96 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +146,9 @@
 			dependencies = (
 			);
 			name = RickAndMortyApi;
+			packageProductDependencies = (
+				6E02595E29D1D5B300139C96 /* Alamofire */,
+			);
 			productName = RickAndMortyApi;
 			productReference = 6ED27BF129C8F37000900147 /* RickAndMortyApi.app */;
 			productType = "com.apple.product-type.application";
@@ -172,6 +177,9 @@
 				Base,
 			);
 			mainGroup = 6ED27BE829C8F37000900147;
+			packageReferences = (
+				6E02595D29D1D5B200139C96 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 6ED27BF229C8F37000900147 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -361,8 +369,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -393,8 +401,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -434,6 +442,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6E02595D29D1D5B200139C96 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6E02595E29D1D5B300139C96 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6E02595D29D1D5B200139C96 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6ED27BE929C8F37000900147 /* Project object */;
 }

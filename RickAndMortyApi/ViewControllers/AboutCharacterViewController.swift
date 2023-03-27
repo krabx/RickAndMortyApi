@@ -29,6 +29,16 @@ final class AboutCharacterViewController: UIViewController {
         statusLabel.text = character.status
         speciesLabel.text = character.species
         fetchImage()
+        setStatusTextColor()
+    }
+    
+    private func setStatusTextColor() {
+        statusLabel.textColor = .green
+        if character.status == "Dead" {
+            statusLabel.textColor = .red
+        } else if character.status == "unknown" {
+            statusLabel.textColor = .gray
+        }
     }
 }
 

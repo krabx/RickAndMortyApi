@@ -26,20 +26,17 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
             switch result {
             case .success(let image):
                 self?.characterImage.image = UIImage(data: image)
-//                DispatchQueue.main.async {
-//                    self?.characterImage.layer.cornerRadius = self?.characterImage.frame.width ?? 400 / 2
-//                }
             case .failure(let error):
                 print(error)
             }
         }
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.layer.cornerRadius = 5
-        self.layer.shadowRadius = 10
-        layer.shadowOpacity = 0.5
-        layer.shadowOffset = CGSize(width: 5, height: 8)
-    }
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        self.layer.cornerRadius = 1
+//        self.layer.shadowRadius = 5
+//        self.layer.shadowOpacity = 0.5
+//        self.layer.shadowOffset = CGSizeZero
+//    }
 }
