@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 enum Link {
     case character
@@ -83,4 +84,6 @@ final class NetworkManager {
             }
         }
     }
+    
+
 }
