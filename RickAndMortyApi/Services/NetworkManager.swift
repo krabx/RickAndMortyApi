@@ -36,6 +36,26 @@ final class NetworkManager {
     
     private init () {}
     
+    func fetchCharacters(from url: String, completion: @escaping (Result<[Character], AFError>) -> Void) {
+        AF.request(url)
+            .responseJSON { dataResponse in
+            guard let statusCode = dataResponse.response?.statusCode else { return }
+            
+            if (200...299).contains(statusCode) {
+                switch dataResponse.result {
+                case .success(let value):
+                    let characters = Character.getCharacters(from: value)
+                    completion(.success(characters))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            } else {
+                guard let error = dataResponse.error else { return }
+                print(error)
+            }
+        }
+    }
+    
     func fetch<T: Decodable>(
         _ type: T.Type,
         from url: String?,
@@ -65,6 +85,20 @@ final class NetworkManager {
                 completion(.failure(.failDecode))
             }
         }.resume()
+    }
+    
+    func fetchData(from url: String, completion: @escaping (Result<Data, AFError>) -> Void) {
+        AF.request(url).responseData { dataResponse in
+            guard let statusCode = dataResponse.response?.statusCode else { return }
+            if (200..<300).contains(statusCode) {
+                switch dataResponse.result {
+                case .success(let imageData):
+                    completion(.success(imageData))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
     func fetchImage(

@@ -18,42 +18,6 @@ class CharactersViewController: UICollectionViewController {
         super.viewDidLoad()
         //fetch()
     }
-    
-    func fetch() {
-        AF.request(Link.character.url)
-            .responseJSON { [weak self] dataResponse in
-            guard let statusCode = dataResponse.response?.statusCode else { return }
-            
-            if (200...299).contains(statusCode) {
-                switch dataResponse.result {
-                case .success(let value):
-                    guard let CharactersData = value as? [String:Any] else { return }
-                    guard let results = CharactersData["results"] as? [[String:Any]] else { return }
-                    print(results)
-                    for result in results {
-                        let character = Character(
-                            name: result["name"] as? String ?? "",
-                            status: result["status"] as? String ?? "",
-                            species: result["species"] as? String ?? "",
-                            origin: result["origin"] as? Origin ?? Origin(name: "", url: ""),
-                            location: result["location"] as? CharacterLocation ?? CharacterLocation(name: "", url: ""),
-                            image: result["image"] as? String ?? "",
-                            episode: result["episode"] as? [String] ?? [""]
-                        )
-
-                        self?.characters.append(character)
-                    }
-                    print(self?.characters.count)
-                    self?.collectionView.reloadData()
-                case .failure(let error):
-                    print(error)
-                }
-            } else {
-                guard let error = dataResponse.error else { return }
-                print(error)
-            }
-        }
-    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let index = collectionView.indexPathsForSelectedItems else { return }
@@ -104,21 +68,34 @@ class CharactersViewController: UICollectionViewController {
 
 extension CharactersViewController {
     func fetchCharacters() {
-        networkManager.fetch(
-            AboutCharacters.self,
-            from: Link.character.url
-        ) {
-            [weak self] result in
-            switch result {
-            case .success(let persons):
-                self?.characters = persons.results
-                self?.nextPage = persons.info.next
-                self?.collectionView.reloadData()
-            case .failure(let error):
-                print(error)
+        networkManager.fetchCharacters(
+            from: Link.character.url) { [weak self] result in
+                switch result {
+                case .success(let persons):
+                    self?.characters = persons
+                    self?.collectionView.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
             }
-        }
     }
+    
+//    func fetchCharacters() {
+//        networkManager.fetch(
+//            AboutCharacters.self,
+//            from: Link.character.url
+//        ) {
+//            [weak self] result in
+//            switch result {
+//            case .success(let persons):
+//                self?.characters = persons.results
+//                self?.nextPage = persons.info.next
+//                self?.collectionView.reloadData()
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
     
     private func fetchNextCharacters(from url: String?) {
         networkManager.fetch(AboutCharacters.self, from: url) { [weak self] result in

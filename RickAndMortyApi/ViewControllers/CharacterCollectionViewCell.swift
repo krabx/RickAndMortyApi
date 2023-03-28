@@ -22,7 +22,7 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
     func configure(with character: Character) {
         nameLabel.text = character.name
         
-        networkManager.fetchImage(from: character.image) { [weak self] result in
+        networkManager.fetchData(from: character.image) { [weak self] result in
             switch result {
             case .success(let image):
                 self?.characterImage.image = UIImage(data: image)
@@ -30,6 +30,15 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
                 print(error)
             }
         }
+        
+//        networkManager.fetchImage(from: character.image) { [weak self] result in
+//            switch result {
+//            case .success(let image):
+//                self?.characterImage.image = UIImage(data: image)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
     }
     
 //    override func layoutSubviews() {
