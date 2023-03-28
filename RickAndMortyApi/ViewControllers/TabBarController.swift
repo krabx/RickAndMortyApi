@@ -21,12 +21,11 @@ class TabBarController: UITabBarController {
                 return
             }
             if let charactersVC = navigationVC.topViewController as? CharactersViewController {
-                //charactersVC.fetchCharacters()
                 charactersVC.fetchCharacters()
             } else if let locationsVC = navigationVC.topViewController as? LocationsViewController {
-                //locationsVC.fetchLocations()
+                locationsVC.fetchLocations()
             } else if let episodesVC = navigationVC.topViewController as? EpisodesViewController {
-                //episodesVC.fetchEpisodes()
+                episodesVC.fetchEpisodes()
             }
         }
     }

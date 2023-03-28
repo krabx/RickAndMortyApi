@@ -7,10 +7,11 @@
 
 import UIKit
 
-class LocationsViewController: UITableViewController {
+final class LocationsViewController: UITableViewController {
     
     private let networkManager = NetworkManager.shared
     private var locations: [Location] = []
+    private var nextPage: String?
     
     // MARK: - Table view data source
     
@@ -25,7 +26,10 @@ class LocationsViewController: UITableViewController {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "location", for: indexPath)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "location",
+            for: indexPath
+        )
         
         var content = cell.defaultContentConfiguration()
         
@@ -44,21 +48,53 @@ class LocationsViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    override func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
+        if locations.count - indexPath.row <= 3 {
+            fetchInfo(from: nextPage)
+            fetchNextLocations(from: nextPage)
+        }
+    }
+    
 }
 
 extension LocationsViewController {
-//    func fetchLocations() {
-//        networkManager.fetch(
-//            AboutLocations.self,
-//            from: Link.location.url
-//        ) {
-//            [weak self] result in
-//            switch result {
-//            case .success(let places):
-//                self?.locations = places.results
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
+    func fetchLocations() {
+        networkManager.fetchLocations(from: Link.location.url) { [weak self] result in
+            switch result {
+            case .success(let locationsData):
+                self?.locations = locationsData
+                self?.fetchInfo(from: Link.location.url)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchInfo(from url: String?) {
+        networkManager.fetchInfo(from: url) { [weak self] result in
+            switch result {
+            case .success(let info):
+                self?.nextPage = info.next
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchNextLocations(from url: String?) {
+        guard let url else { return }
+        networkManager.fetchLocations(from: url) { [weak self] result in
+            switch result {
+            case .success(let newLocations):
+                self?.locations.append(contentsOf: newLocations)
+                self?.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

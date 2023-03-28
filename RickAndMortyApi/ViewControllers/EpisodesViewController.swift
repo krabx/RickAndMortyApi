@@ -11,6 +11,7 @@ final class EpisodesViewController: UITableViewController {
     
     private let networkManager = NetworkManager.shared
     private var episodes: [Episode] = []
+    private var nextPage: String?
     
     // MARK: - Table view data source
     
@@ -25,7 +26,10 @@ final class EpisodesViewController: UITableViewController {
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "episode", for: indexPath)
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: "episode",
+            for: indexPath
+        )
         
         var content = cell.defaultContentConfiguration()
         
@@ -43,21 +47,53 @@ final class EpisodesViewController: UITableViewController {
     ) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    override func tableView(
+        _ tableView: UITableView,
+        willDisplay cell: UITableViewCell,
+        forRowAt indexPath: IndexPath
+    ) {
+        if episodes.count - indexPath.row <= 3 {
+            fetchInfo(from: nextPage)
+            fetchNextEpisodes(from: nextPage)
+        }
+    }
 }
 
 extension EpisodesViewController {
-//    func fetchEpisodes() {
-//        networkManager.fetch(
-//            AboutEpisodes.self,
-//            from: Link.episode.url
-//        ) {
-//            [weak self] result in
-//            switch result {
-//            case .success(let episodes):
-//                self?.episodes = episodes.results
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
+    func fetchEpisodes() {
+        networkManager.fetchEpisodes(from: Link.episode.url) { [weak self] result in
+            switch result {
+            case .success(let episodesData):
+                self?.episodes = episodesData
+                self?.fetchInfo(from: Link.episode.url)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchInfo(from url: String?) {
+        networkManager.fetchInfo(from: url) { [weak self] result in
+            switch result {
+            case .success(let info):
+                self?.nextPage = info.next
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchNextEpisodes(from url: String?) {
+        guard let url else { return }
+        networkManager.fetchEpisodes(from: url) { [weak self] result in
+            switch result {
+            case .success(let newEpisodes):
+                self?.episodes.append(contentsOf: newEpisodes)
+                self?.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

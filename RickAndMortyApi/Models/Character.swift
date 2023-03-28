@@ -12,11 +12,19 @@ struct Character: Decodable {
     let status: String
     let species: String
     let origin: Origin
-    let location: CharacterLocation
+    let location: Origin
     let image: String
     let episode: [String]
     
-    init(name: String, status: String, species: String, origin: Origin, location: CharacterLocation, image: String, episode: [String]) {
+    init(
+        name: String,
+        status: String,
+        species: String,
+        origin: Origin,
+        location: Origin,
+        image: String,
+        episode: [String]
+    ) {
         self.name = name
         self.status = status
         self.species = species
@@ -26,36 +34,29 @@ struct Character: Decodable {
         self.episode = episode
     }
     
-    init(CharacterData: [String: Any]) {
-        name = CharacterData["name"] as? String ?? ""
-        status = CharacterData["status"] as? String ?? ""
-        species = CharacterData["species"] as? String ?? ""
-        origin = CharacterData["origin"] as? Origin ?? Origin(name: "", url: "")
-        location = CharacterData["location"] as? CharacterLocation ?? CharacterLocation(name: "", url: "")
-        image = CharacterData["image"] as? String ?? ""
-        episode = CharacterData["episode"] as? [String] ?? [""]
+    init(characterData: [String: Any]) {
+        name = characterData["name"] as? String ?? ""
+        status = characterData["status"] as? String ?? ""
+        species = characterData["species"] as? String ?? ""
+        origin = characterData["origin"] as? Origin ?? Origin(name: "", url: "")
+        location = characterData["location"] as? Origin ?? Origin(name: "", url: "")
+        image = characterData["image"] as? String ?? ""
+        episode = characterData["episode"] as? [String] ?? [""]
     }
     
     static func getCharacters(from value: Any) -> [Character] {
         guard let resultsData = value as? [String:Any] else { return [] }
-        guard let CharactersData = resultsData["results"] as? [[String:Any]] else { return [] }
-        return CharactersData.map { Character(CharacterData: $0) }
+        guard let charactersData = resultsData["results"] as? [[String:Any]] else {
+            return []
+        }
+        
+        return charactersData.map { Character(characterData: $0) }
     }
 }
 
 struct Origin: Decodable {
     let name: String
     let url: String
-}
-
-struct CharacterLocation: Decodable {
-    let name: String
-    let url: String
-}
-
-struct AboutCharacters: Decodable {
-    let info: Info
-    let results: [Character]
 }
 
 struct Info: Decodable {
@@ -70,6 +71,7 @@ struct Info: Decodable {
         guard let infoData = resultsData["info"] as? [String: Any] else {
             return Info(pages: 0, next: "", prev: "")
         }
+        
         let info = Info(
             pages: infoData["pages"] as? Int ?? 0,
             next: infoData["next"] as? String,
@@ -77,26 +79,57 @@ struct Info: Decodable {
         )
         return info
     }
-    
-}
-
-struct AboutLocations: Decodable {
-    let results: [Location]
 }
 
 struct Location: Decodable {
     let name: String
     let type: String
-    let url: String
-}
-
-struct AboutEpisodes: Decodable {
-    let results: [Episode]
+    let dimension: String
+    let residents: [Character]
+    
+    init(name: String, type: String, dimension: String, residents: [Character]) {
+        self.name = name
+        self.type = type
+        self.dimension = dimension
+        self.residents = residents
+    }
+    
+    init(locationsData: [String: Any]) {
+        name = locationsData["name"] as? String ?? ""
+        type = locationsData["type"] as? String ?? ""
+        dimension = locationsData["dimension"] as? String ?? ""
+        residents = locationsData["residents"] as? [Character] ?? []
+    }
+    
+    static func getLocations(from value: Any) -> [Location] {
+        guard let resultsData = value as? [String: Any] else { return [] }
+        guard let locationsData = resultsData["results"] as? [[String: Any]] else {
+            return []
+        }
+        
+        return locationsData.map { Location(locationsData: $0) }
+    }
 }
 
 struct Episode: Decodable {
     let name: String
     let episode: String
+    
+    init(name: String, episode: String) {
+        self.name = name
+        self.episode = episode
+    }
+    
+    init(episodeData: [String: Any]) {
+        name = episodeData["name"] as? String ?? ""
+        episode = episodeData["episode"] as? String ?? ""
+    }
+    
+    static func getEpisodes(from value: Any) -> [Episode] {
+        guard let resultsData = value as? [String: Any] else { return [] }
+        guard let episodesData = resultsData["results"] as? [[String: Any]] else {
+            return []
+        }
+        return episodesData.map { Episode(episodeData: $0) }
+    }
 }
-
-
