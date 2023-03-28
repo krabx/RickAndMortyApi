@@ -46,18 +46,18 @@ final class EpisodesViewController: UITableViewController {
 }
 
 extension EpisodesViewController {
-    func fetchEpisodes() {
-        networkManager.fetch(
-            AboutEpisodes.self,
-            from: Link.episode.url
-        ) {
-            [weak self] result in
-            switch result {
-            case .success(let episodes):
-                self?.episodes = episodes.results
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    func fetchEpisodes() {
+//        networkManager.fetch(
+//            AboutEpisodes.self,
+//            from: Link.episode.url
+//        ) {
+//            [weak self] result in
+//            switch result {
+//            case .success(let episodes):
+//                self?.episodes = episodes.results
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
 }

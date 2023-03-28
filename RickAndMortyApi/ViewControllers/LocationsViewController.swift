@@ -47,18 +47,18 @@ class LocationsViewController: UITableViewController {
 }
 
 extension LocationsViewController {
-    func fetchLocations() {
-        networkManager.fetch(
-            AboutLocations.self,
-            from: Link.location.url
-        ) {
-            [weak self] result in
-            switch result {
-            case .success(let places):
-                self?.locations = places.results
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
+//    func fetchLocations() {
+//        networkManager.fetch(
+//            AboutLocations.self,
+//            from: Link.location.url
+//        ) {
+//            [weak self] result in
+//            switch result {
+//            case .success(let places):
+//                self?.locations = places.results
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
 }

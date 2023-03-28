@@ -61,6 +61,7 @@ class CharactersViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if characters.count - indexPath.row <= 3 {
+            fetchInfo(from: nextPage)
             fetchNextCharacters(from: nextPage)
         }
     }
@@ -73,6 +74,7 @@ extension CharactersViewController {
                 switch result {
                 case .success(let persons):
                     self?.characters = persons
+                    self?.fetchInfo(from: Link.character.url)
                     self?.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -98,12 +100,34 @@ extension CharactersViewController {
 //    }
     
     private func fetchNextCharacters(from url: String?) {
-        networkManager.fetch(AboutCharacters.self, from: url) { [weak self] result in
+        guard let url else { return }
+        networkManager.fetchCharacters(from: url) { [weak self] result in
             switch result {
-            case .success(let persons):
-                self?.characters.append(contentsOf:persons.results)
-                self?.nextPage = persons.info.next
+            case .success(let newCharacters):
+                self?.characters.append(contentsOf: newCharacters)
+                //self?.fetchInfo(from: url)
                 self?.collectionView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+//        networkManager.fetch(AboutCharacters.self, from: url) { [weak self] result in
+//            switch result {
+//            case .success(let persons):
+//                self?.characters.append(contentsOf:persons.results)
+//                self?.nextPage = persons.info.next
+//                self?.collectionView.reloadData()
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+    }
+    
+    func fetchInfo(from url: String?) {
+        networkManager.fetchInfo(from: url) { [weak self] result in
+            switch result {
+            case .success(let info):
+                self?.nextPage = info.next
             case .failure(let error):
                 print(error)
             }

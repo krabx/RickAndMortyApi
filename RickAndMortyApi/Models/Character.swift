@@ -37,8 +37,8 @@ struct Character: Decodable {
     }
     
     static func getCharacters(from value: Any) -> [Character] {
-        guard let resultsData = value as? [String:Any] else { return []}
-        guard let CharactersData = resultsData["results"] as? [[String:Any]] else { return []}
+        guard let resultsData = value as? [String:Any] else { return [] }
+        guard let CharactersData = resultsData["results"] as? [[String:Any]] else { return [] }
         return CharactersData.map { Character(CharacterData: $0) }
     }
 }
@@ -62,6 +62,22 @@ struct Info: Decodable {
     let pages: Int
     let next: String?
     let prev: String?
+    
+    static func getInfo(from value: Any) -> Info {
+        guard let resultsData = value as? [String: Any] else {
+            return Info(pages: 0, next: "", prev: "")
+        }
+        guard let infoData = resultsData["info"] as? [String: Any] else {
+            return Info(pages: 0, next: "", prev: "")
+        }
+        let info = Info(
+            pages: infoData["pages"] as? Int ?? 0,
+            next: infoData["next"] as? String,
+            prev: infoData["prev"] as? String
+        )
+        return info
+    }
+    
 }
 
 struct AboutLocations: Decodable {

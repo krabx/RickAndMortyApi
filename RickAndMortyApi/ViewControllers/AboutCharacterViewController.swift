@@ -13,7 +13,11 @@ final class AboutCharacterViewController: UIViewController {
     
     var character: Character!
 
-    @IBOutlet var characterImage: UIImageView!
+    @IBOutlet var characterImage: UIImageView! {
+        didSet {
+            //characterImage.layer.cornerRadius = characterImage.frame.height / 2
+        }
+    }
     
     @IBOutlet var nameLabel: UILabel!
     @IBOutlet var statusLabel: UILabel!
@@ -22,6 +26,10 @@ final class AboutCharacterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setCharactersData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        characterImage.layer.cornerRadius = characterImage.frame.height / 2
     }
     
     private func setCharactersData() {
@@ -43,18 +51,30 @@ final class AboutCharacterViewController: UIViewController {
 }
 
 extension AboutCharacterViewController {
+    
     private func fetchImage() {
-        networkManager.fetchImage(from: character.image) { [weak self] result in
+        networkManager.fetchData(from: character.image) { [weak self] result in
             switch result {
-            case .success(let image):
-                self?.characterImage.image = UIImage(data: image)
-                DispatchQueue.main.async {
-                    self?.characterImage.layer.cornerRadius = (self?.characterImage.frame.height ?? 300) / 2
-                }
+            case .success(let imageData):
+                self?.characterImage.image = UIImage(data: imageData)
+                //self?.characterImage.layer.cornerRadius = self?.characterImage.frame.height ?? 0 / 2
             case .failure(let error):
                 print(error)
             }
         }
     }
+//    private func fetchImage() {
+//        networkManager.fetchImage(from: character.image) { [weak self] result in
+//            switch result {
+//            case .success(let image):
+//                self?.characterImage.image = UIImage(data: image)
+//                DispatchQueue.main.async {
+//                    self?.characterImage.layer.cornerRadius = (self?.characterImage.frame.height ?? 300) / 2
+//                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//    }
 
 }
