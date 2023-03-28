@@ -8,17 +8,12 @@
 import UIKit
 import Alamofire
 
-class CharactersViewController: UICollectionViewController {
+final class CharactersViewController: UICollectionViewController {
     
     private let networkManager = NetworkManager.shared
     private var characters: [Character] = []
     private var nextPage: String?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        //fetch()
-    }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let index = collectionView.indexPathsForSelectedItems else { return }
         guard let aboutCharacterVC = segue.destination as? AboutCharacterViewController else {
@@ -26,9 +21,9 @@ class CharactersViewController: UICollectionViewController {
         }
         aboutCharacterVC.character = characters[index[0].row]
     }
-
-//     MARK: UICollectionViewDataSource
-
+    
+    //     MARK: UICollectionViewDataSource
+    
     override func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -42,7 +37,7 @@ class CharactersViewController: UICollectionViewController {
     ) {
         performSegue(withIdentifier: "aboutCharacter", sender: nil)
     }
-
+    
     override func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
@@ -61,6 +56,7 @@ class CharactersViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if characters.count - indexPath.row <= 3 {
+            fetchInfo(from: nextPage)
             fetchNextCharacters(from: nextPage)
         }
     }
@@ -73,6 +69,7 @@ extension CharactersViewController {
                 switch result {
                 case .success(let persons):
                     self?.characters = persons
+                    self?.fetchInfo(from: Link.character.url)
                     self?.collectionView.reloadData()
                 case .failure(let error):
                     print(error)
@@ -80,30 +77,24 @@ extension CharactersViewController {
             }
     }
     
-//    func fetchCharacters() {
-//        networkManager.fetch(
-//            AboutCharacters.self,
-//            from: Link.character.url
-//        ) {
-//            [weak self] result in
-//            switch result {
-//            case .success(let persons):
-//                self?.characters = persons.results
-//                self?.nextPage = persons.info.next
-//                self?.collectionView.reloadData()
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//    }
-    
     private func fetchNextCharacters(from url: String?) {
-        networkManager.fetch(AboutCharacters.self, from: url) { [weak self] result in
+        guard let url else { return }
+        networkManager.fetchCharacters(from: url) { [weak self] result in
             switch result {
-            case .success(let persons):
-                self?.characters.append(contentsOf:persons.results)
-                self?.nextPage = persons.info.next
+            case .success(let newCharacters):
+                self?.characters.append(contentsOf: newCharacters)
                 self?.collectionView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchInfo(from url: String?) {
+        networkManager.fetchInfo(from: url) { [weak self] result in
+            switch result {
+            case .success(let info):
+                self?.nextPage = info.next
             case .failure(let error):
                 print(error)
             }
@@ -123,5 +114,4 @@ extension CharactersViewController: UICollectionViewDelegateFlowLayout {
             height: 400
         )
     }
-
 }

@@ -30,22 +30,5 @@ final class CharacterCollectionViewCell: UICollectionViewCell {
                 print(error)
             }
         }
-        
-//        networkManager.fetchImage(from: character.image) { [weak self] result in
-//            switch result {
-//            case .success(let image):
-//                self?.characterImage.image = UIImage(data: image)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
     }
-    
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        self.layer.cornerRadius = 1
-//        self.layer.shadowRadius = 5
-//        self.layer.shadowOpacity = 0.5
-//        self.layer.shadowOffset = CGSizeZero
-//    }
 }

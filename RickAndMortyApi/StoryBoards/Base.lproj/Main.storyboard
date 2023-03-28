@@ -77,14 +77,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LLP-le-Uha">
-                                <rect key="frame" x="10" y="20" width="300" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="LLP-le-Uha" secondAttribute="height" multiplier="1:1" id="is0-Ba-NWb"/>
-                                </constraints>
-                            </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="H3M-ap-Vqc">
-                                <rect key="frame" x="16" y="360" width="288" height="104"/>
+                                <rect key="frame" x="16" y="291" width="288" height="104"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="3LC-Kg-jlX">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="24"/>
@@ -139,12 +133,18 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LLP-le-Uha">
+                                <rect key="frame" x="44.5" y="20" width="231" height="231"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="LLP-le-Uha" secondAttribute="height" multiplier="1:1" id="is0-Ba-NWb"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4Mo-IU-TOh"/>
                         <color key="backgroundColor" red="0.65490196078431373" green="0.79607843137254897" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="4Mo-IU-TOh" firstAttribute="trailing" secondItem="H3M-ap-Vqc" secondAttribute="trailing" constant="16" id="DqD-zd-Mar"/>
-                            <constraint firstItem="LLP-le-Uha" firstAttribute="height" secondItem="7QS-Xz-C8Y" secondAttribute="height" multiplier="0.182482" constant="199.999864" id="Hlg-qk-qfp"/>
+                            <constraint firstItem="LLP-le-Uha" firstAttribute="height" secondItem="7QS-Xz-C8Y" secondAttribute="height" multiplier="0.12" constant="165" id="Hlg-qk-qfp"/>
                             <constraint firstItem="H3M-ap-Vqc" firstAttribute="leading" secondItem="4Mo-IU-TOh" secondAttribute="leading" constant="16" id="Szv-de-SCK"/>
                             <constraint firstItem="LLP-le-Uha" firstAttribute="top" secondItem="4Mo-IU-TOh" secondAttribute="top" constant="20" id="h0Q-ae-EeF"/>
                             <constraint firstItem="H3M-ap-Vqc" firstAttribute="top" secondItem="LLP-le-Uha" secondAttribute="bottom" constant="40" id="psG-J6-sY4"/>
@@ -240,9 +240,7 @@
                             <outlet property="delegate" destination="X86-t2-3Wl" id="LzG-BJ-LiG"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Characters" id="JUV-Bl-k2p">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="magnifyingglass" catalog="system" id="Pah-tU-B6V"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Characters" id="JUV-Bl-k2p"/>
                     <connections>
                         <segue destination="E6h-w2-aex" kind="presentation" identifier="aboutCharacter" id="nJx-h8-37Z"/>
                     </connections>
@@ -277,7 +275,7 @@
                     <tabBarItem key="tabBarItem" title="Locations" image="locations" id="uQa-yB-T1O"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="T2Y-xW-2YB">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="92.5"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="98.5"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -313,6 +311,5 @@
         <image name="characters" width="25" height="25"/>
         <image name="episodes" width="25" height="25"/>
         <image name="locations" width="25" height="25"/>
-        <image name="magnifyingglass" catalog="system" width="128" height="117"/>
     </resources>
 </document>
