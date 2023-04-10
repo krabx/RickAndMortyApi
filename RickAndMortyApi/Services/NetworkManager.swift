@@ -37,7 +37,7 @@ final class NetworkManager {
             if (200..<300).contains(statusCode) {
                 switch dataResponse.result {
                 case .success(let value):
-                    let info = Info.getInfo(from: value)
+                    let info = Info(from: value)
                     completion(.success(info))
                 case .failure(let error):
                     print(error)

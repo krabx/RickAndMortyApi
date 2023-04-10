@@ -13,10 +13,10 @@ final class AboutCharacterViewController: UIViewController {
     
     var character: Character!
 
-    @IBOutlet var characterImage: UIImageView! {
-        didSet{
-            characterImage.layer.cornerRadius = characterImage.frame.height / 2
-        }
+    @IBOutlet var characterImage: UIImageView!
+    
+    override func viewWillLayoutSubviews() {
+        characterImage.layer.cornerRadius = characterImage.frame.height / 2
     }
     
     @IBOutlet var nameLabel: UILabel!

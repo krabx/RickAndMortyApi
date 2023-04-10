@@ -12,14 +12,38 @@ final class CharactersViewController: UICollectionViewController {
     
     private let networkManager = NetworkManager.shared
     private var characters: [Character] = []
+    private var filterCharacters: [Character] = []
     private var nextPage: String?
+    private let searchVC = UISearchController(searchResultsController: nil)
+    private var searchBarIsEmpty: Bool {
+        guard let searchText = searchVC.searchBar.text else { return false}
+        return searchText.isEmpty
+    }
+    private var isFiltering: Bool {
+        searchVC.isActive && !searchBarIsEmpty
+    }
+    
+    override func viewDidLoad() {
+        setupSearch()
+    }
+    
+    func setupSearch() {
+        searchVC.searchResultsUpdater = self
+        searchVC.obscuresBackgroundDuringPresentation = false
+        searchVC.searchBar.placeholder = "Search"
+        searchVC.searchBar.barTintColor = .white
+        navigationItem.searchController = searchVC
+        definesPresentationContext = true
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let index = collectionView.indexPathsForSelectedItems else { return }
         guard let aboutCharacterVC = segue.destination as? AboutCharacterViewController else {
             return
         }
-        aboutCharacterVC.character = characters[index[0].row]
+        aboutCharacterVC.character = isFiltering
+        ? filterCharacters[index[0].row]
+        : characters[index[0].row]
     }
     
     //     MARK: UICollectionViewDataSource
@@ -28,7 +52,7 @@ final class CharactersViewController: UICollectionViewController {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return characters.count
+        isFiltering ? filterCharacters.count : characters.count
     }
     
     override func collectionView(
@@ -49,7 +73,10 @@ final class CharactersViewController: UICollectionViewController {
         guard let cell = cell as? CharacterCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(with: characters[indexPath.row])
+        cell.configure(with: isFiltering
+                       ? filterCharacters[indexPath.row]
+                       : characters[indexPath.row]
+        )
         
         return cell
     }
@@ -59,6 +86,12 @@ final class CharactersViewController: UICollectionViewController {
             fetchInfo(from: nextPage)
             fetchNextCharacters(from: nextPage)
         }
+        
+        if filterCharacters.count - indexPath.row <= 3 {
+            fetchInfo(from: nextPage)
+            fetchNextCharacters(from: nextPage)
+        }
+        
     }
 }
 
@@ -113,5 +146,18 @@ extension CharactersViewController: UICollectionViewDelegateFlowLayout {
             width: view.window?.windowScene?.screen.bounds.width ?? 400 - 48,
             height: 400
         )
+    }
+}
+
+extension CharactersViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filterBySearch(searchController.searchBar.text ?? "")
+    }
+    
+    func filterBySearch(_ searchRequest: String) {
+        filterCharacters = characters.filter({ character in
+            character.name.lowercased().contains(searchRequest.lowercased())
+        })
+        collectionView.reloadData()
     }
 }
